@@ -1,1 +1,137 @@
+# See https://cloud.google.com/appengine/docs/standard/php/config/appref for a
+# complete list of `app.yaml` directives.
 runtime: php83
+
+
+# Optional. Overrides the default startup behavior by executing the entrypoint command when your app starts.
+# For your app to receive HTTP requests, the entrypoint element should contain a command which starts a web server that listens on port 8080.
+# If you do not specify entrypoint for the PHP runtime, App Engine serves your application through a front controller at a public/index.php or index.php file.
+# For more information, see Application startup.
+entrypoint: serve --workers=2 --enable-dynamic-workers public/index.php
+
+automatic_scaling:
+  #target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 1
+  #min_pending_latency: 30ms
+  #max_pending_latency: automatic
+  #max_concurrent_requests: 50
+
+#handlers:
+  # Serve a directory as a static resource.
+  #- url: /stylesheets
+  #  static_dir: stylesheets
+
+  # All URLs beginning with /stylesheets are treated as paths to
+  # static files in the stylesheets/ directory.
+  #- url: /stylesheets
+  #  static_dir: stylesheets
+  #    # ...
+
+  # All URLs ending in .gif .png or .jpg are treated as paths to
+  # static files in the static/ directory. The URL pattern is a
+  # regular expression, with a grouping that is inserted into the
+  # path to the file.
+  #- url: /(.*\.(gif|png|jpg))$
+  #  static_files: static/\1
+  #  upload: static/.*\.(gif|png|jpg)$
+  #    # ...
+
+
+  # Serve images as static resources.
+  #- url: /(.+\.(gif|png|jpg))$
+  #  static_files: \1
+  #  upload: .+\.(gif|png|jpg)$
+
+  #- url: /images
+  #  static_dir: static/images
+  #  http_headers:
+  #    #Access-Control-Allow-Origin: *
+  #    Access-Control-Allow-Origin: https://mygame.uc.r.appspot.com
+  #    X-Foo-Header: foo
+  #    X-Bar-Header: bar value
+  #    vary: Accept-Encoding
+  #  # ...
+  #  #mime_type:
+  #  #secure: optional
+  #  #secure: never
+  #  secure: always
+  #  redirect_http_response_code: 301
+
+  # Serve your app through a front controller at index.php or public/index.php.
+  #- url: .*
+  #  script: auto
+
+#error_handlers:
+#  - file: default_error.html
+#  - error_code: over_quota
+#    file: over_quota.html
+#  - error_code: timeout
+#    file: timeout.html
+
+#inbound_services:
+#  - warmup
+
+
+# Optional. If you want to use the App Engine legacy bundled services for second-generation runtimes, set this field to true.
+#app_engine_apis: false
+
+# Optional. If you are using a runtime that supports buildpacks, you can define build environment variables in your app.yaml file.
+#build_env_variables:
+
+# Optional. Sets a global default cache period for all static file handlers for an application.
+# You can also configure a cache duration for specific static file handlers.
+# The value is a string of numbers and units, separated by spaces, where units can be:
+# d for days,
+# h for hours,
+# m for minutes,
+# and s for seconds.
+# For example, "4d 5h" sets cache expiration to 4 days and 5 hours after the file is first requested.
+# If omitted, the production server sets the expiration to 10 minutes.
+#default_expiration: "4d 5h"
+
+#extension=memcached.so
+#extension=grpc.so
+#extension=protobuf.so
+#extension=mongodb.so
+#extension=imagick.so
+#extension=opencensus.so
+#extension=redis.so
+
+
+# Required if creating a service. Optional for the default service.
+# Each service and each version must have a name.
+# A name can contain numbers, letters, and hyphens.
+# The combined length of VERSION-dot-SERVICE-dot-PROJECT_ID,
+# where VERSION is the name of your version,
+# SERVICE is the name of your service,
+# and PROJECT_ID is your project ID,
+# cannot be longer than 63 characters and cannot start or end with a hyphen.
+# Choose a unique name for each service and each version.
+# Don't reuse names between services and versions.
+#service: service-name
+
+# Optional. The service_account element lets you specify a version-specific service account as the identity for the version.
+# The specified service account is used when accessing other Google Cloud services and executing tasks.
+#service_account: [SERVICE_ACCOUNT_NAME]@[PROJECT_ID].iam.gserviceaccount.com
+
+# Optional. You can define environment variables in your app.yaml file to make them available to your app.
+# Ensure that the key in Environment variable(s) matches the expression '[a-zA-Z_][a-zA-Z0-9_]*' (start with alphabet or "_" followed by any alphanumeric or "_").
+# Environment variables that are prefixed with GAE are reserved for system use and not allowed in the app.yaml file.
+env_variables:
+  MY_VAR: "my value"
+  #GOOGLE_STORAGE_BUCKET: ""
+  ## populate these to use the "mysql" or "postres" backends
+
+  #CLOUDSQL_CONNECTION_NAME: ""
+  #CLOUDSQL_CONNECTION_NAME: "app-name:region:instance-name"
+  ##Set the CLOUDSQL_CONNECTION_NAME variable to app-name:region:instance-name
+  ##You can retrieve the necessary details by using the following gcloud command:
+  ##"gcloud sql instances describe INSTANCE"
+  ##For a Cloud SQL Second Generation instance, the CLOUDSQL_CONNECTION_NAME will be in the following format:
+  ##"your_project_name:your_region:your_instance"
+
+  #CLOUDSQL_USER: ""
+  #CLOUDSQL_PASSWORD: ""
+  ## Uncomment to give your database a name other than "bookshelf"
+  # CLOUDSQL_DATABASE_NAME: ""
