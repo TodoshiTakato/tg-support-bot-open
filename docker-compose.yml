@@ -6,22 +6,22 @@ services:
                 uid: ${UID:-1000}
             context: ./
             dockerfile: docker/php-fpm/Dockerfile
-        image: tg-support-bot-php-fpm
+        image: tg-support-bot-open-php-fpm
         environment:
             - TZ=Asia/Tashkent
-        container_name: tg-support-bot-php-fpm
+        container_name: tg-support-bot-open-php-fpm
         restart: unless-stopped
-        working_dir: /home/tg-support-bot/www
+        working_dir: /home/tg-support-bot-open/www
         volumes:
-            - ./:/home/tg-support-bot/www
+            - ./:/home/tg-support-bot-open/www
             - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
             - ./docker/php-fpm/www-bot.conf:/usr/local/etc/php-fpm.d/www2.conf
         networks:
-            - tg-support-bot-network
+            - tg-support-bot-open-network
 
     db:
         image: mariadb:10.5.15
-        container_name: tg-support-bot-mysql
+        container_name: tg-support-bot-open-mysql
         restart: unless-stopped
         ports:
             - ${DB_PORT}:3306
@@ -34,41 +34,41 @@ services:
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
         volumes:
-            - tg-support-bot-mysql-data:/var/lib/mysql
+            - tg-support-bot-open-mysql-data:/var/lib/mysql
         networks:
-            - tg-support-bot-network
+            - tg-support-bot-open-network
 
     webserver:
         image: nginx:alpine
-        container_name: tg-support-bot-nginx
+        container_name: tg-support-bot-open-nginx
         environment:
             -   TZ=Asia/Tashkent
         restart: unless-stopped
         ports:
             - ${WEBSERVER_PORT:-80}:80
         volumes:
-            - ./:/home/tg-support-bot/www
+            - ./:/home/tg-support-bot-open/www
             - ./docker/nginx:/etc/nginx/conf.d
         networks:
-            - tg-support-bot-network
+            - tg-support-bot-open-network
 
     redis:
         image: redis
-        container_name: tg-support-bot-redis
+        container_name: tg-support-bot-open-redis
         environment:
             - TZ=Asia/Tashkent
         restart: unless-stopped
         ports:
             - ${REDIS_PORT}:${REDIS_PORT}
         volumes:
-            - tg-support-bot-redis-data:/var/lib/redis/
+            - tg-support-bot-open-redis-data:/var/lib/redis/
         networks:
-            - tg-support-bot-network
+            - tg-support-bot-open-network
 #
 #    rabbitmq:
 ##        image: rabbitmq:3.8.18-management
 #        image: rabbitmq:3.13.0-management
-#        container_name: tg-support-bot-rabbitmq
+#        container_name: tg-support-bot-open-rabbitmq
 #        environment:
 #            - TZ=Asia/Tashkent
 #            - RABBITMQ_DEFAULT_USER=${AMQP_USER}
@@ -86,22 +86,22 @@ services:
 #            - ${AMQP_PORT}:${AMQP_PORT}
 #            - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
 #        volumes:
-#            - tg-support-bot-rabbitmq-config:/etc/rabbitmq/rabbitmq.config
-#            - tg-support-bot-rabbitmq-data:/var/lib/rabbitmq/
-#            - tg-support-bot-rabbitmq-log:/var/log/rabbitmq/
-#            - tg-support-bot-rabbitmq-database:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+#            - tg-support-bot-open-rabbitmq-config:/etc/rabbitmq/rabbitmq.config
+#            - tg-support-bot-open-rabbitmq-data:/var/lib/rabbitmq/
+#            - tg-support-bot-open-rabbitmq-log:/var/log/rabbitmq/
+#            - tg-support-bot-open-rabbitmq-database:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
 #        networks:
-#            - tg-support-bot-network
+#            - tg-support-bot-open-network
 
 
 volumes:
-    tg-support-bot-mysql-data:
-    tg-support-bot-redis-data:
-#    tg-support-bot-rabbitmq-config:
-#    tg-support-bot-rabbitmq-data:
-#    tg-support-bot-rabbitmq-log:
-#    tg-support-bot-rabbitmq-database:
+    tg-support-bot-open-mysql-data:
+    tg-support-bot-open-redis-data:
+#    tg-support-bot-open-rabbitmq-config:
+#    tg-support-bot-open-rabbitmq-data:
+#    tg-support-bot-open-rabbitmq-log:
+#    tg-support-bot-open-rabbitmq-database:
 
 networks:
-    tg-support-bot-network:
+    tg-support-bot-open-network:
         driver: bridge

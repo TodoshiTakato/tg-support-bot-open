@@ -23,9 +23,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
-RUN useradd -G www-data,root -u $uid -d /home/tg-support-bot/ $user
-RUN mkdir -p /home/tg-support-bot/.composer && \
-    chown -R $user:$user /home/tg-support-bot/
+RUN useradd -G www-data,root -u $uid -d /home/tg-support-bot-open/ $user
+RUN mkdir -p /home/tg-support-bot-open/.composer && \
+    chown -R $user:$user /home/tg-support-bot-open/
 
 USER $user
 
