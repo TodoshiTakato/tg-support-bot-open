@@ -64,43 +64,43 @@ services:
             - tg-support-bot-redis-data:/var/lib/redis/
         networks:
             - tg-support-bot-network
-
-    rabbitmq:
-#        image: rabbitmq:3.8.18-management
-        image: rabbitmq:3.13.0-management
-        container_name: tg-support-bot-rabbitmq
-        environment:
-            - TZ=Asia/Tashkent
-            - RABBITMQ_DEFAULT_USER=${AMQP_USER}
-            - RABBITMQ_DEFAULT_PASS=${AMQP_PASSWORD}
-#            - RABBITMQ_DEFAULT_VHOST=${AMQP_VHOST}
-#        deploy:
-#            resources:
-#                limits:
-#                    cpus: '0.50'
-#                    memory: 50M
-#                reservations:
-#                    cpus: '0.25'
-#                    memory: 20M
-        ports:
-            - ${AMQP_PORT}:${AMQP_PORT}
-            - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
-        volumes:
-            - tg-support-bot-rabbitmq-config:/etc/rabbitmq/rabbitmq.config
-            - tg-support-bot-rabbitmq-data:/var/lib/rabbitmq/
-            - tg-support-bot-rabbitmq-log:/var/log/rabbitmq/
-            - tg-support-bot-rabbitmq-database:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
-        networks:
-            - tg-support-bot-network
+#
+#    rabbitmq:
+##        image: rabbitmq:3.8.18-management
+#        image: rabbitmq:3.13.0-management
+#        container_name: tg-support-bot-rabbitmq
+#        environment:
+#            - TZ=Asia/Tashkent
+#            - RABBITMQ_DEFAULT_USER=${AMQP_USER}
+#            - RABBITMQ_DEFAULT_PASS=${AMQP_PASSWORD}
+##            - RABBITMQ_DEFAULT_VHOST=${AMQP_VHOST}
+##        deploy:
+##            resources:
+##                limits:
+##                    cpus: '0.50'
+##                    memory: 50M
+##                reservations:
+##                    cpus: '0.25'
+##                    memory: 20M
+#        ports:
+#            - ${AMQP_PORT}:${AMQP_PORT}
+#            - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
+#        volumes:
+#            - tg-support-bot-rabbitmq-config:/etc/rabbitmq/rabbitmq.config
+#            - tg-support-bot-rabbitmq-data:/var/lib/rabbitmq/
+#            - tg-support-bot-rabbitmq-log:/var/log/rabbitmq/
+#            - tg-support-bot-rabbitmq-database:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+#        networks:
+#            - tg-support-bot-network
 
 
 volumes:
     tg-support-bot-mysql-data:
     tg-support-bot-redis-data:
-    tg-support-bot-rabbitmq-config:
-    tg-support-bot-rabbitmq-data:
-    tg-support-bot-rabbitmq-log:
-    tg-support-bot-rabbitmq-database:
+#    tg-support-bot-rabbitmq-config:
+#    tg-support-bot-rabbitmq-data:
+#    tg-support-bot-rabbitmq-log:
+#    tg-support-bot-rabbitmq-database:
 
 networks:
     tg-support-bot-network:
