@@ -12,6 +12,9 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
 COPY config/php.ini /etc/php7/conf.d/custom.ini
 
+- ./:/home/paymart-bot/www
+- ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+- ./docker/php-fpm/www-bot.conf:/usr/local/etc/php-fpm.d/www2.conf
 
 
 # Install packages
@@ -25,12 +28,13 @@ RUN chown -R www:www /www
 #backup of original nginx.conf
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
 
-# Configure nginx
-COPY ./docker/nginx/bot.conf /etc/nginx/nginx.conf
-
 # Remove default server definition
 RUN rm /etc/nginx/conf.d/default.conf
 RUN rm /usr/local/etc/nginx/nginx.conf
+
+# Configure nginx
+COPY ./docker/nginx/bot.conf /etc/nginx/nginx.conf
+
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
